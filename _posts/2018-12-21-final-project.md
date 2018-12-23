@@ -208,9 +208,6 @@ plt.show()
 ```
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/new_dist.PNG?raw=true)
 
-```ruby
-```
-![](EM-algorithm 학습 과정(수렴할때까지 iteration)-반복결과)
 
 #모평균벡터/모평균 공분산행렬 보여주고, 위에서 얻은 값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
 그래서 결론적으로 50개,50개 100개 labled data: unlabled data 몇게, 100개 있으니까 절대적으로 작아서 performance가 좋았다. 가 결론이 되야함.
