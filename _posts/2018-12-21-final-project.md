@@ -109,6 +109,8 @@ $$ y follows Bernoulli(p=P(Y=2)), y=1,2$$
 
 Gaussian mixture model-EM algorithm 구현(python code)
 ======================================================
+작년 강성호 학생의 코드를 전반적으로 참고하되 제가 주석을 새로 달고 수정해야 될 부분을 수정하였습니다.
+
 ```ruby
 #필요한 패키지 import 
 import random
@@ -207,7 +209,103 @@ plt.show()
 
 ```
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/new_dist.PNG?raw=true)
+                     [그림1]: Visualization of data points
+위의 그림은 labeled data(group1,group2), unlabeld data를 단순 시각화 한 것입니다.(x축:X1(Random variable), y축:X2(Random variable))
 
+
+
+```ruby
+# EM algorithm 시작
+
+#step0: initialization
+#초기 파라미터 (비율,모평균,모분산 행렬)에 대한 MLE로,
+#각각 labeled data만을 이용한 클래스 비율, 표본평균, 표본공분산 행렬을 계산합니다.
+#이 파라미터들이 EM-algorithm의 "초기" 값입니다.
+
+# labeled data의 평균과 분산
+
+# 초기값: labeled data의 표본평균벡터(MEAN of X1 and Mean of X2) for each class or modal (group=1,group=2)
+
+# mean of group1(blue), and group2(red)
+mean_modal_01=[sum(labeldata1_x)/len(labeldata1_x),sum(labeldata1_y)/len(labeldata1_y)]
+mean_modal_02=[sum(labeldata2_x)/len(labeldata2_x),sum(labeldata2_y)/len(labeldata2_y)]
+
+# 초기 공분산 행렬: labeled data의 표본공분산행렬(COV of X1 and X2) for each class or modal (group=1,group=2)
+#variance-covariance matrix of group1(blue), and group2(red)
+cov_modal_01=np.cov(labeldata1_x,labeldata1_y)
+cov_modal_02=np.cov(labeldata2_x,labeldata2_y)
+
+# 초기 class proportion- labeled data는 50개,50개를 뽑았으므로 따로 계산할 필요없이,
+# 초기 클래스 비율은 0.5(group1:blue),0.5(group2)red)입니다.
+w1=0.5 # group1(blue)
+w2=0.5 # group2(red)
+
+# define p.d.f of mixture of multivariate normal distribution
+# in this case, bi-variates(X1,X2) and bi-modals(group1,group2)
+
+# X: new data(this case, unlabeled data),
+# labeleld data로 추정한 MLE: mean: mean_model01,mean_model02, cov: cov_modal01,cov_modal02
+def gaussian_pdf(x,mean,cov):
+    pdf=(1/(2*np.pi*np.sqrt(np.linalg.det(cov))))*np.exp(((x-mean).dot(np.linalg.inv(cov)).dot(np.transpose((x-mean))))/-2)
+    return pdf
+
+# this is input for updated pdf (thorugh E-M step)
+# 다시 한번 말씀드리지만, x: X1, y:X2이고, y는 그룹이 아니라 X2변수입니다.
+# concatenating non-labeldata x and y 
+#non-labeled data에 대하여 x(X1), y(X2)를 이어 붙입니다.): column bind
+non_labeldata_adj=np.empty([len(non_labeldata_adjx),2])
+for i in range(len(non_labeldata_adjx)):
+	non_labeldata_adj[i]=[non_labeldata_adjx[i],non_labeldata_adjy[i]]
+# 초기 EM 알고리즘에서 사용하기 위한 설정
+input_modal_01=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반복하며 MLE를 업데이트 할 것임 , LABELD DATA는 모수추정할때만 포함됨
+input_modal_02=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반복하며 MLE를 업데이트 할 것임 , LABELD DATA는 모수추정할때만 포함됨
+
+```
+
+```ruby
+# E-M algorithm
+# E-step (expectation)
+iteration=29 # for 30 step, starting from zero to 29(python index)
+for a in range(iteration):
+# labeldata의 parameter로 추정한 non-labeldata의 확률값
+	# 대각값이 원하는 확률값(그 이외에는 (x1:group1의 X1,y2:group2의 X2) 등의 조합l MATCH 되지 않음)
+# class1, class2의 gaussian p.d.f는 labeled data
+    # modal1의 p.d.f(modal1의 mean, cov 대입)에 unlabeled data의 X1,X2 입력시 계산되는 확률
+	estimation1=gaussian_pdf(x=input_modal_01,mean=mean_modal_01,cov=cov_modal_01)
+	# modal2의 p.d.f(modal2의 mean, cov 대입)에 unlabeled data의 X1,X2 입력시 계산되는 확률
+	estimation2=gaussian_pdf(x=input_modal_02,mean=mean_modal_02,cov=cov_modal_02)
+	#가중치를 반영하기 전 관측치들의 modal 별 확률
+	unlabeled_prob1=[]
+	for i in range(len(estimation1[0])):
+		unlabeled_prob1.append(estimation1[i][i])
+	unlabeled_prob2=[]
+	for i in range(len(estimation2[0])):
+		unlabeled_prob2.append(estimation2[i][i])
+
+# 가중치(w1,w2)를 반영한 Unlabeled data 확률값 도출
+#  p(x,y|theta)=p(y|theta):class 확률(w1,w2) * p(x|y,theta): N(x;muy,sigmay): gaussian 확률(각 pdf에 대입한 확률)
+	weighted_unlabeled_prob1=w1*np.array(unlabeled_prob1)
+	weighted_unlabeled_prob2=w2*np.array(unlabeled_prob2)
+
+# E-step: 위에서 구한 확률을 기반으로 p(y|x,theta) 계산: 각 클래스별 로 속할 확률 
+# X,theta가 given 됐을때 각 modal에 속할 확률 계산: w1, w2 반영 
+# modal1, modal2를 각각 열로하고, non_labeldata를 행으로 하는 행렬
+	weight_matrix=np.empty([len(unlabeled_prob1),2])
+	for i in range(len(weighted_unlabeled_prob1)):
+		weight_matrix[i][0]=(weighted_unlabeled_prob1[i])/(weighted_unlabeled_prob1[i]+weighted_unlabeled_prob2[i])
+		weight_matrix[i][1]=(weighted_unlabeled_prob2[i])/(weighted_unlabeled_prob1[i]+weighted_unlabeled_prob2[i])
+
+#위의 확률 행렬과 non_labeldata array와 합치기- M-step 넘어가기 전에 E-step에서의 분류를 위함
+non_label_prob_adj=np.hstack((weight_matrix,non_labeldata_adj))
+non_label_prob_adj=np.c_[ non_label_prob_adj, np.ones(900) ] # add a column for group
+
+for i in range(len(non_label_prob_adj)):
+    if non_label_prob_adj[i][0]>=non_label_prob_adj[i][1]:
+        non_label_prob_adj[i][4]=1 #1: group1(blue)  
+    else :
+        non_label_prob_adj[i][4]=2 #2: group2(red)
+
+```
 
 #모평균벡터/모평균 공분산행렬 보여주고, 위에서 얻은 값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
 그래서 결론적으로 50개,50개 100개 labled data: unlabled data 몇게, 100개 있으니까 절대적으로 작아서 performance가 좋았다. 가 결론이 되야함.
