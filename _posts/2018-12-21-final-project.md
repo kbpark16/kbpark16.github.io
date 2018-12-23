@@ -209,7 +209,8 @@ plt.show()
 
 ```
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/new_dist.PNG?raw=true)
-                     [그림1]: Visualization of data points
+
+[그림1]: Visualization of data points
 위의 그림은 labeled data(group1,group2), unlabeld data를 단순 시각화 한 것입니다.(x축:X1(Random variable), y축:X2(Random variable))
 
 
@@ -307,15 +308,30 @@ for i in range(len(non_label_prob_adj)):
 
 ```
 
+
+```ruby
+print("----------------------- ","원래 분포의 모수들, group1, group2"," -----------------------",sep="")
+print(mean1,"|",mean2) #mean1: group1의  모평균벡터, mean2: group2의모평균벡터
+print(sigma1) #group1의 모 공분산 행렬
+print(sigma2) #group2의 모 공분산 행렬 
+```
+아래를 보시면 처음 샘플링한 분포들의 모수입니다. 차례대로 [3,1]이 group1(blue)의 모평균벡터(mean of X1, and mean of X2), [2,2]이 group2(red)의 모평균 벡터(mean of X1 and mean of X2), 그리고 [[1,0],[0,1]]:( 차례대로 첫 행, 두번째 행 입니다.)이 group1(blue)의 모 공분산 행렬, 마지막으로 [[1,0.9],[0.9,1]] :(차례대로 첫 행, 두번째 행 입니다.)이 group2(red)의 모 공분산 행렬입니다.
+
+![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/original%20parameters.PNG?raw=true)
+_ _ _
+
+**위의 결과로부터 얻은 결론**
+
+_ _ _
+
 #모평균벡터/모평균 공분산행렬 보여주고, 위에서 얻은 값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
 그래서 결론적으로 50개,50개 100개 labled data: unlabled data 몇게, 100개 있으니까 절대적으로 작아서 performance가 좋았다. 가 결론이 되야함.
 -시각화가 매우 중요!
-```ruby
-print("----------------------- ","exact solution"," -----------------------",sep="")
-print(mean1,"|",mean2)
-print(sigma1)
-print(sigma2)
-```
 
+_ _ _
+
+**limitation**
+
+_ _ _
 
 #limitation: MN로뿌터 뽑은 simulation data라서 GMM알고리즘이 잘작동되었을 수 있고, 일반적으로 얻을 수 있는 데이터는 MN 가정을 만족하지 않을 수 있으므로 performance는 안 좋을수 있다.-안 좋았던 수업 ppt 예 보여주기(시간남으면 MN이랑 따른 분포로부터 뽑은 데이터랑 performance 비교 )
