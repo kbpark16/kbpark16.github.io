@@ -20,7 +20,6 @@ Machine Learning은 크게 Regression, Classifcation과 같이 Label이 있는 S
 아래는 전체적인 이해에 도움이 되는, 강필성 교수님의 교안에서 얻은 그림입니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/semi-supervised-learning.PNG?raw=true)
-
 reference: 강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.3
 
 _ _ _
@@ -32,7 +31,7 @@ _ _ _
 뒤에서 설명드릴 Semi-supervised Learning으로 쓰이는 Gaussian mixture model은 아래와 같이 Self-training의 한 방식입니다.
 간단하게 말씀드리면, 시작은 labeled data만 이용해서 모델을 학습시키고, 그 모델을 바탕으로 unlabeled data의 label을 예측합니다.
 그리고 그 예측결과를 바탕으로 unlabeled data에 label을 주고, 기존 labeled data와 합쳐서 새로 모델을 학습시키는 것입니다.
-뒤에서 말씀드리겠지만, Gaussian mixture model은 \(\omega,\mu,\sigma\) 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다.
+뒤에서 말씀드리겠지만, Gaussian mixture model은 $\(\omega,\mu,\sigma\)$ 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/self_training.PNG?raw=true)
 reference: https://www.pinterest.co.kr/pin/540713499003163569/,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.19
@@ -68,13 +67,13 @@ labeled data만 있는 경우(group=1,2) 아래와 같이 모델 파라미터에
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/labeled_data_only.PNG?raw=true)
 reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.29
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/MLE.png?raw=true)
-and  $$(\omega_{1}: proportion of class 1, \omega{2}: proportion of class 2\)$$
+and  $$(\omega_{1}: proportion_of_class 1, \omega{2}: proportion_of_class 2 \)$$
 
 reference: CS229 Lecture notes,Andrew Ng, Part IV, Generative Learning algorithms
 
 위와 같이 Labeled data만 있는 경우에는, 모든 파라미터에 대한 MLE를 명시적으로 구할 수 있기 때문에 MLE에 근사한 해를 찾기 위한 EM 알고리즘 등 의 시도가 필요하지 않습니다.
 
-하지만, 아래와 같이 unlabeled data까지 고려하는 경우(Labeled and unlabeled data), unlabeled data의 실제 label을 모르기 때문에, unlabled data의 label이 hidden variable이 되고, 아래의 Log-likelihood function를 Maximize 시켜주는 MLE를 명시적으로 구하기 어렵습니다. 그러므로, MLE를 근사적으로 구하는, Expectation-Maximization(EM)algorithm을 이용하여 parameter\(\theta={\omega,\mu,\sigma}\)들의 최적값을 구해야 합니다.
+하지만, 아래와 같이 unlabeled data까지 고려하는 경우(Labeled and unlabeled data), unlabeled data의 실제 label을 모르기 때문에, unlabled data의 label이 hidden variable이 되고, 아래의 Log-likelihood function를 Maximize 시켜주는 MLE를 명시적으로 구하기 어렵습니다. 그러므로, MLE를 근사적으로 구하는, Expectation-Maximization(EM)algorithm을 이용하여 parameter$\(\theta={\omega,\mu,\sigma}\)$들의 최적값을 구해야 합니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/unlabeled_data_added.PNG?raw=true)
 reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.34
@@ -206,7 +205,6 @@ plt.show()
 
 ```
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/new_dist.PNG?raw=true)
-
 
 ```ruby
 ```
