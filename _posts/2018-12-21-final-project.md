@@ -88,7 +88,7 @@ Step0(Initialization step)에서 labeled data만 이용하여 각 클래스별(g
 초기값으로 구합니다. 비율은 단순히 클래스별 비율로 추정하고, 모평균벡터 및 모공분산행렬의 M.L.E는 Andrew Ng님의 reference로 위에서 명시하였습니다.
 Step1(Expectation step)에서는 모든 unlabeled data에 대해, $\(p(y|x,\theta))\$를 계산하여 더 높은 확률을 갖는 클래스로 할당합니다.
 Step2(Maximization step)에서는 labeled data에 Step1에서 $\(p(y|x,\theta))\$를 기반으로 labeling 한 unlabeled data들을 학습데이터로 추가하여, proportion, sample mean, sample covariance로 각 클래스별 $\(\theta_{MLE})\$를 업데이트 합니다.
-그리고 Step1, Step2를 unlabeled data에 대해서만, $\(\theta={\omega,\mu,\sigma}\)$들이 특정 값으로 수렴할때까지 반복합니다.
+그리고 Step1, Step2를 unlabeled data에 대해서만, $\(\theta={\omega,\mu,\Sigma}\)$들이 특정 값으로 수렴할때까지 반복합니다.
 (labeled data에 대해서는 label을 유지, step2에서 MLE를 unlabled data와 합쳐서 MLE를 추정할때만 쓰입니다.)
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/E-M%20algorithm.PNG?raw=true)
@@ -264,6 +264,7 @@ input_modal_02=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반
 ```
 
 ```ruby
+# 이 부분을 못 짜겠음
 # E-M algorithm
 # E-step (expectation)
 iteration=29 # for 30 step, starting from zero to 29(python index)
