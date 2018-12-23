@@ -39,8 +39,12 @@ reference: https://www.pinterest.co.kr/pin/540713499003163569/,  강필성 교�
 
 _ _ _
 
+
 **Discriminative model v.s Generative model **
+
+
 _ _ _
+
 
 Generative model 중 하나인 Gaussian mixture model을 설명하기에 앞서, 아래 그림으로 Generative model과 Discriminative model의 차이를 설명드리겠습니다. 아래에서 h는 머신러닝에서 y(종속변수),v는 x(예측변수)라고 생각하시며 됩니다. 흔히 아시는 Discriminative model은, x가 주어졌을때 y의 확률을( p(y|x) ) 구해서 classification을 하는 모델로써, 대표적으로 로지스틱 회귀분석을 생각하시면 됩니다. Generative model은 똑같이 classification이 목적이지만, 이 데이터가 어떠한 메커니즘( p(x,y) )에 의해 형성되었는지를 알고, 그것을 기준으로 classification을 하는 방식입니다.  (p(x,y)=p(x|y)p(y): Using Bayes' theorem)
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/Dis-Gen.PNG?raw=true)
@@ -102,9 +106,11 @@ $$ x|y=2 follows MN(\mu_{2},\Sigma_{2})$$
 
 $$ y follows Bernoulli(p=P(Y=2)), y=1,2$$
 
-#Gaussian mixture model-EM algorithm 구현(python code)
+
+Gaussian mixture model-EM algorithm 구현(python code)
+======================================================
 ```ruby
-#필요한 패키지 import
+#필요한 패키지 import 
 import random
 import numpy as np
 import matplotlib
