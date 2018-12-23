@@ -20,6 +20,7 @@ Machine Learning은 크게 Regression, Classifcation과 같이 Label이 있는 S
 아래는 전체적인 이해에 도움이 되는, 강필성 교수님의 교안에서 얻은 그림입니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/semi-supervised-learning.PNG?raw=true)
+
 reference: 강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.3
 
 _ _ _
@@ -31,12 +32,10 @@ _ _ _
 뒤에서 설명드릴 Semi-supervised Learning으로 쓰이는 Gaussian mixture model은 아래와 같이 Self-training의 한 방식입니다.
 간단하게 말씀드리면, 시작은 labeled data만 이용해서 모델을 학습시키고, 그 모델을 바탕으로 unlabeled data의 label을 예측합니다.
 그리고 그 예측결과를 바탕으로 unlabeled data에 label을 주고, 기존 labeled data와 합쳐서 새로 모델을 학습시키는 것입니다.
-뒤에서 말씀드리겠지만, Gaussian mixture model은 $\(\omega,\mu,\sigma\)$ 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다.
+뒤에서 말씀드리겠지만, Gaussian mixture model은 $\theta=(\omega,\mu,\Sigma\)$ 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/self_training.PNG?raw=true)
 reference: https://www.pinterest.co.kr/pin/540713499003163569/,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.19
-
-_ _ _
 
 _ _ _
 
@@ -44,6 +43,7 @@ _ _ _
 _ _ _
 Generative model 중 하나인 Gaussian mixture model을 설명하기에 앞서, 아래 그림으로 Generative model과 Discriminative model의 차이를 설명드리겠습니다. 아래에서 h는 머신러닝에서 y(종속변수),v는 x(예측변수)라고 생각하시며 됩니다. 흔히 아시는 Discriminative model은, x가 주어졌을때 y의 확률을( p(y|x) ) 구해서 classification을 하는 모델로써, 대표적으로 로지스틱 회귀분석을 생각하시면 됩니다. Generative model은 똑같이 classification이 목적이지만, 이 데이터가 어떠한 메커니즘( p(x,y) )에 의해 형성되었는지를 알고, 그것을 기준으로 classification을 하는 방식입니다.  (p(x,y)=p(x|y)p(y): Using Bayes' theorem)
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/Dis-Gen.PNG?raw=true)
+
 reference: Choi, S. (2015). Deep Learning: A Quick Overview. Learning Choi, S. (2015). Deep Learning: A Quick Overview,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.28
 
 _ _ _
@@ -53,7 +53,7 @@ _ _ _
 _ _ _
 
 
-Semi-supervised Learning: Generative models, especially Gaussian mixture models, Novelty detection과 차이: 둘 다 궁극적으로는 classification(Supervised Learning)의 performance를 높이고자 하는 시도인데, Novelty detection에서의 GMM은 BINARY로 치면, 불량/양품중에 양품이 절대적으로 수가 적을 때, 양품으로만 \(\omega,\mu,\sigma\) 파라미터를 학습시키고, 그 결과로 불량품을 분류하는데, Semi-supervised Learning은 labeled data의 수가 절대적으로 부족할 때,  불량과 양품 모두 학습시키는 대신에, 시작은 labeled data로만 이용해서 파라미터를 학습시키고, 그것을 바탕으로 unlabeled data도 classification 후, 학습 데이터로 추가시키는 self-training 종류의 하나입니다. 결과적으로 둘 다 Classification을 잘 하기 위한 것이고 같은 모델(GMM)을 사용하지만, 가장 큰 차이는 양품만 이용하느냐, 불량품 양품 모두 이용하는데 unlabeled data까지 이용하느냐 차이입니다.
+Semi-supervised Learning: Generative models, especially Gaussian mixture models, Novelty detection과 차이: 둘 다 궁극적으로는 classification(Supervised Learning)의 performance를 높이고자 하는 시도인데, Novelty detection에서의 GMM은 BINARY로 치면, 불량/양품중에 양품이 절대적으로 수가 적을 때, 양품으로만 $\theta=(\omega,\mu,\Sigma\)$ 파라미터를 학습시키고, 그 결과로 불량품을 분류하는데, Semi-supervised Learning은 labeled data의 수가 절대적으로 부족할 때,  불량과 양품 모두 학습시키는 대신에, 시작은 labeled data로만 이용해서 파라미터를 학습시키고, 그것을 바탕으로 unlabeled data도 classification 후, 학습 데이터로 추가시키는 self-training 종류의 하나입니다. 결과적으로 둘 다 Classification을 잘 하기 위한 것이고 같은 모델(GMM)을 사용하지만, 가장 큰 차이는 양품만 이용하느냐, 불량품 양품 모두 이용하는데 unlabeled data까지 이용하느냐 차이입니다.
 
 
 _ _ _
@@ -67,7 +67,7 @@ labeled data만 있는 경우(group=1,2) 아래와 같이 모델 파라미터에
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/labeled_data_only.PNG?raw=true)
 reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.29
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/MLE.png?raw=true)
-and  $$(\omega_{1}: proportion_of_class 1, \omega{2}: proportion_of_class 2 \)$$
+and  $(\omega_{1}: proportion of class 1,\omega{2}: proportion of class 2\)$
 
 reference: CS229 Lecture notes,Andrew Ng, Part IV, Generative Learning algorithms
 
@@ -80,9 +80,9 @@ reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님
 위에서 언급한대로, unlabeled data가 있는 경우에, E-M 알고리즘을 통해 M.L.E에 근사적인 해를 구하는 과정은 아래와 같습니다.
 Step0(Initialization step)에서 labeled data만 이용하여 각 클래스별(group=1,2) 비율, 모평균벡터, 모공분산행렬의 M.L.E를 
 초기값으로 구합니다. 비율은 단순히 클래스별 비율로 추정하고, 모평균벡터 및 모공분산행렬의 M.L.E는 Andrew Ng님의 reference로 위에서 명시하였습니다.
-Step1(Expectation step)에서는 모든 unlabeled data에 대해, \(\p(y|x,\theta))\를 계산하여 더 높은 확률을 갖는 클래스로 할당합니다.
+Step1(Expectation step)에서는 모든 unlabeled data에 대해, $\(\p(y|x,\theta))\$를 계산하여 더 높은 확률을 갖는 클래스로 할당합니다.
 -수식 풀어서 wy 보여주기
-Step2(Maximization step)에서는 labeled data에 Step1에서 \(\p(y|x,\theta))\를 기반으로 labeling 한 unlabeled data들을 학습데이터로 추가하여, proportion, sample mean, sample covariance로 각 클래스별 \(\theta_{MLE}\)를 업데이트 합니다.
+Step2(Maximization step)에서는 labeled data에 Step1에서 $\(\p(y|x,\theta))\$를 기반으로 labeling 한 unlabeled data들을 학습데이터로 추가하여, proportion, sample mean, sample covariance로 각 클래스별 $\(\theta_{MLE})\$를 업데이트 합니다.
 그리고 Step1, Step2를 theta가 특정 값으로 수렴할때까지 반복합니다.
 -unlabeled data에 대해서만 Step1, Step2를 반복하는 것인가?
 -iteration 은 하이퍼 파라미터? 값들이 수렴하는지 보고
