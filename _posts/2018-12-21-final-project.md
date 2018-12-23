@@ -32,7 +32,7 @@ _ _ _
 뒤에서 설명드릴 Semi-supervised Learning으로 쓰이는 Gaussian mixture model은 아래와 같이 Self-training의 한 방식입니다.
 간단하게 말씀드리면, 시작은 labeled data만 이용해서 모델을 학습시키고, 그 모델을 바탕으로 unlabeled data의 label을 예측합니다.
 그리고 그 예측결과를 바탕으로 unlabeled data에 label을 주고, 기존 labeled data와 합쳐서 새로 모델을 학습시키는 것입니다.
-뒤에서 말씀드리겠지만, Gaussian mixture model은 $\theta=(\omega,\mu,\Sigma\)$ 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다.
+뒤에서 말씀드리겠지만, Gaussian mixture model은 $\theta=(\omega,\mu,\Sigma\)$ 3개 파라미터가 있고, 파라미터가 특정 값에 수렴할때까지 1,2,3번 과정을 반복하는 EM algorithm을 이용합니다. 
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/self_training.PNG?raw=true)
 reference: https://www.pinterest.co.kr/pin/540713499003163569/,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.19
@@ -41,6 +41,7 @@ _ _ _
 
 **Discriminative model v.s Generative model **
 _ _ _
+
 Generative model 중 하나인 Gaussian mixture model을 설명하기에 앞서, 아래 그림으로 Generative model과 Discriminative model의 차이를 설명드리겠습니다. 아래에서 h는 머신러닝에서 y(종속변수),v는 x(예측변수)라고 생각하시며 됩니다. 흔히 아시는 Discriminative model은, x가 주어졌을때 y의 확률을( p(y|x) ) 구해서 classification을 하는 모델로써, 대표적으로 로지스틱 회귀분석을 생각하시면 됩니다. Generative model은 똑같이 classification이 목적이지만, 이 데이터가 어떠한 메커니즘( p(x,y) )에 의해 형성되었는지를 알고, 그것을 기준으로 classification을 하는 방식입니다.  (p(x,y)=p(x|y)p(y): Using Bayes' theorem)
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/Dis-Gen.PNG?raw=true)
 
@@ -83,7 +84,8 @@ Step0(Initialization step)에서 labeled data만 이용하여 각 클래스별(g
 초기값으로 구합니다. 비율은 단순히 클래스별 비율로 추정하고, 모평균벡터 및 모공분산행렬의 M.L.E는 Andrew Ng님의 reference로 위에서 명시하였습니다.
 Step1(Expectation step)에서는 모든 unlabeled data에 대해, $\(p(y|x,\theta))\$를 계산하여 더 높은 확률을 갖는 클래스로 할당합니다.
 Step2(Maximization step)에서는 labeled data에 Step1에서 $\(p(y|x,\theta))\$를 기반으로 labeling 한 unlabeled data들을 학습데이터로 추가하여, proportion, sample mean, sample covariance로 각 클래스별 $\(\theta_{MLE})\$를 업데이트 합니다.
-그리고 Step1, Step2를 theta가 특정 값으로 수렴할때까지 반복합니다.
+그리고 Step1, Step2를 unlabeled data에 대해서만, $\(\theta={\omega,\mu,\sigma}\)$들이 특정 값으로 수렴할때까지 반복합니다.
+(labeled data에 대해서는 label을 유지, step2에서 MLE를 unlabled data와 합쳐서 MLE를 추정할때만 쓰입니다.)
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/E-M%20algorithm.PNG?raw=true)
 reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.35
@@ -100,13 +102,9 @@ $$ x|y=2 follows MN(\mu_{2},\Sigma_{2})$$
 
 $$ y follows Bernoulli(p=P(Y=2)), y=1,2$$
 
-1. Expectation stage
-
-
-2. Maximization stage
-
-#(Gaussian mixture model-EM algorithm)
+#Gaussian mixture model-EM algorithm 구현(python code)
 ```ruby
+#필요한 패키지 import
 import random
 import numpy as np
 import matplotlib
