@@ -78,7 +78,7 @@ reference: CS229 Lecture notes,Andrew Ng, Part IV, Generative Learning algorithm
 
 위와 같이 Labeled data만 있는 경우에는, 모든 파라미터에 대한 MLE를 명시적으로 구할 수 있기 때문에 MLE에 근사한 해를 찾기 위한 EM 알고리즘 등 의 시도가 필요하지 않습니다.
 
-하지만, 아래와 같이 unlabeled data까지 고려하는 경우(Labeled and unlabeled data), unlabeled data의 실제 label을 모르기 때문에, unlabled data의 label이 hidden variable이 되고, 아래의 Log-likelihood function를 Maximize 시켜주는 MLE를 명시적으로 구하기 어렵습니다. 그러므로, MLE를 근사적으로 구하는, Expectation-Maximization(EM)algorithm을 이용하여 parameter$\(\theta={\omega,\mu,\sigma}\)$들의 최적값을 구해야 합니다.
+하지만, 아래와 같이 unlabeled data까지 고려하는 경우(Labeled and unlabeled data), unlabeled data의 실제 label을 모르기 때문에, unlabled data의 label이 hidden variable이 되고, 아래의 Log-likelihood function를 Maximize 시켜주는 MLE를 명시적으로 구하기 어렵습니다. 그러므로, MLE를 근사적으로 구하는, Expectation-Maximization(EM)algorithm을 이용하여 parameter$\(\theta={\omega,\mu,\Sigma}\)$들의 최적값을 구해야 합니다.
 
 ![](https://github.com/kbpark16/kbpark16.github.io/blob/master/images/unlabeled_data_added.PNG?raw=true)
 reference: Zhu.X.(2007). Semi-Supervised Learning Tutorial,  강필성 교수님 '비즈니스 어낼리틱스' 교안 chapter5, p.34
