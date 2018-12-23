@@ -1,17 +1,17 @@
 # Site settings
-title: seonghun Park
-description: ''
+title: KeonVin Park
+description: 'Thank you for visiting my page'
 url: 'http://joshgerdes.com/jekyll-uno'
 baseurl: 
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 
 author:
-  name: 'seonghunPark'
-  email: pshv725@gmail.com
+  name: 'KeonVin Park'
+  email: kbpark16daum.net
   twitter_username: joshgerdes
   facebook_username: joshgerdes
-  github_username:  seonghunPark
+  github_username:  KeonVin Park
   linkedin_username:  joshgerdes
 
 defaults:
