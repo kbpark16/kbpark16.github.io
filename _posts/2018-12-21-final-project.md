@@ -263,16 +263,7 @@ input_modal_02=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반
 
 ```
 
-```ruby
-# 이 부분을 못 짜겠음
-# E-M algorithm
-# E-step (expectation)
-iteration=29 # for 30 step, starting from zero to 29(python index)
-for a in range(iteration):
-# labeldata의 parameter로 추정한 non-labeldata의 확률값
-	# 대각값이 원하는 확률값(그 이외에는 (x1:group1의 X1,y2:group2의 X2) 등의 조합l MATCH 되지 않음)
-# class1, class2의 gaussian p.d.f는 labeled data
-    # modal1의 p.d.f(modal1의 mean, cov 대입)에 unlabeled data의 X1,X2 입력시 계산되는 확률
+```ruby                                                                                
 	estimation1=gaussian_pdf(x=input_modal_01,mean=mean_modal_01,cov=cov_modal_01)
 	# modal2의 p.d.f(modal2의 mean, cov 대입)에 unlabeled data의 X1,X2 입력시 계산되는 확률
 	estimation2=gaussian_pdf(x=input_modal_02,mean=mean_modal_02,cov=cov_modal_02)
@@ -326,6 +317,8 @@ _ _ _
 **위의 결과로부터 얻은 결론**
 
 _ _ _
+
+#목적이 분류였으므로, 오분류율 명시 -이 알고리즘이 잘 작동을 했다는(performance)의 증거는, 오분류율로 보여줘야 한다.- unlabeled data 추가 하기 전, 추가한 후
 
 #모평균벡터/모평균 공분산행렬 보여주고, 위에서 얻은 값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
 그래서 결론적으로 50개,50개 100개 labled data: unlabled data 몇게, 100개 있으니까 절대적으로 작아서 performance가 좋았다. 가 결론이 되야함.
