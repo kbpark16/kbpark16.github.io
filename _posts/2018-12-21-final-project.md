@@ -263,7 +263,7 @@ input_modal_02=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반
 
 ```
 
-```ruby                                                                                
+```ruby                                           
 	estimation1=gaussian_pdf(x=input_modal_01,mean=mean_modal_01,cov=cov_modal_01)
 	# modal2의 p.d.f(modal2의 mean, cov 대입)에 unlabeled data의 X1,X2 입력시 계산되는 확률
 	estimation2=gaussian_pdf(x=input_modal_02,mean=mean_modal_02,cov=cov_modal_02)
@@ -280,23 +280,7 @@ input_modal_02=non_labeldata_adj #unlabeled data에 대해서만 labeling을 반
 	weighted_unlabeled_prob1=w1*np.array(unlabeled_prob1)
 	weighted_unlabeled_prob2=w2*np.array(unlabeled_prob2)
 
-# E-step: 위에서 구한 확률을 기반으로 p(y|x,theta) 계산: 각 클래스별 로 속할 확률 
-# X,theta가 given 됐을때 각 modal에 속할 확률 계산: w1, w2 반영 
-# modal1, modal2를 각각 열로하고, non_labeldata를 행으로 하는 행렬
-	weight_matrix=np.empty([len(unlabeled_prob1),2])
-	for i in range(len(weighted_unlabeled_prob1)):
-		weight_matrix[i][0]=(weighted_unlabeled_prob1[i])/(weighted_unlabeled_prob1[i]+weighted_unlabeled_prob2[i])
-		weight_matrix[i][1]=(weighted_unlabeled_prob2[i])/(weighted_unlabeled_prob1[i]+weighted_unlabeled_prob2[i])
-
-#위의 확률 행렬과 non_labeldata array와 합치기- M-step 넘어가기 전에 E-step에서의 분류를 위함
-non_label_prob_adj=np.hstack((weight_matrix,non_labeldata_adj))
-non_label_prob_adj=np.c_[ non_label_prob_adj, np.ones(900) ] # add a column for group
-
-for i in range(len(non_label_prob_adj)):
-    if non_label_prob_adj[i][0]>=non_label_prob_adj[i][1]:
-        non_label_prob_adj[i][4]=1 #1: group1(blue)  
-    else :
-        non_label_prob_adj[i][4]=2 #2: group2(red)
+#E-step, M-step은 구현을 못했습니다.
 
 ```
 
