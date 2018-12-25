@@ -100,9 +100,9 @@ $$P(x,y | \theta)= P(y | \theta)P(x | y , \theta)=\omega_{y}N(x; \mu_{y},\Sigma_
 $$\sum_{y'}P(x,y'|\theta)=P(y=1|\theta)P(x|y=1,\theta)+P(y=2|\theta)P(x|y=2,\theta)$$
 
 with assumption that(GMM),
-$$ x|y=1 follows MN(\mu_{1},\Sigma_{1})$$
+$$ x|y=1 follows MultivariateNormal(\mu_{1},\Sigma_{1})$$
 
-$$ x|y=2 follows MN(\mu_{2},\Sigma_{2})$$
+$$ x|y=2 follows MultivariateNormal(\mu_{2},\Sigma_{2})$$
 
 $$ y follows Bernoulli(p=P(Y=2)), y=1,2$$
 
@@ -302,9 +302,11 @@ _ _ _
 
 _ _ _
 
+
+
 #목적이 분류였으므로, 오분류율 명시 -이 알고리즘이 잘 작동을 했다는(performance)의 증거는, 오분류율로 보여줘야 한다.- unlabeled data 추가 하기 전, 추가한 후
 
-#모평균벡터/모평균 공분산행렬 보여주고, 위에서 얻은 값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
+#모평균벡터/모공분산행렬 보여주고, 위에서 E-M alogirthm으로 얻은 추정값과 얼마나 차이나는지, EM-algorithm을 이용한 Semi-supervised learning의 수치적 결과와 labeled data만 이용한 Supervised learning의 수치적 결과를 제시하고, 둘의 결과 plotting(분포 및 decision boundary)
 그래서 결론적으로 50개,50개 100개 labled data: unlabled data 몇게, 100개 있으니까 절대적으로 작아서 performance가 좋았다. 가 결론이 되야함.
 -시각화가 매우 중요!
 
@@ -315,4 +317,4 @@ _ _ _
 
 _ _ _
 
-#limitation: MN로뿌터 뽑은 simulation data라서 GMM알고리즘이 잘작동되었을 수 있고, 일반적으로 얻을 수 있는 데이터는 MN 가정을 만족하지 않을 수 있으므로 performance는 안 좋을수 있다.-안 좋았던 수업 ppt 예 보여주기(시간남으면 MN이랑 따른 분포로부터 뽑은 데이터랑 performance 비교 )
+#limitation: MN로뿌터 뽑은 simulation data라서 GMM알고리즘이 잘작동되었을 수 있고, 일반적으로 얻을 수 있는 데이터는 MN 가정을 만족하지 않을 수 있으므로 performance는 안 좋을수 있다.-안 좋았던 수업 ppt 예 보여주기(시간남으면 MN이랑 다른 분포로부터 뽑은 데이터랑 performance 비교 )
